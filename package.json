@@ -1,0 +1,13 @@
+{
+  "name": "leilao-distribuido",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Leilão distribuído com até 5 nós, gestão de quórum, eleição Bully, replicação e dashboard",
+  "type": "commonjs",
+  "scripts": {
+    "start:node": "node src/server.js",
+    "start:dashboard": "node dashboard/server.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "engines": { "node": ">=20" }
+}
