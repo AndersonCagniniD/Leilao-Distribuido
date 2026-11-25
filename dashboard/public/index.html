@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,73 +9,220 @@
   <link rel="stylesheet" href="/style.css" />
   <script src="/app.js" defer></script>
 </head>
+
 <body>
   <div class="app-shell">
     <aside class="sidebar">
-      <div class="brand"><span class="brand-mark">A<span class="brand-dot">.</span></span><div><strong>átrio</strong><small>distributed auctions</small></div></div>
+      <div class="brand"><span class="brand-mark">A<span class="brand-dot">.</span></span>
+        <div><strong>átrio</strong><small>distributed auctions</small></div>
+      </div>
       <div class="sidebar-label">WORKSPACE</div>
       <nav class="nav" aria-label="Navegação principal">
-        <button class="nav-link active" type="button" data-view="overview"><span class="nav-ico">◫</span> Visão geral</button>
+        <button class="nav-link active" type="button" data-view="overview"><span class="nav-ico">◫</span> Visão
+          geral</button>
         <button class="nav-link" type="button" data-view="auctions"><span class="nav-ico">▤</span> Leilões</button>
-        <button class="nav-link" type="button" data-view="lab"><span class="nav-ico">◈</span> Laboratório <span class="nav-mini">até 5 nós</span></button>
+        <button class="nav-link" type="button" data-view="lab"><span class="nav-ico">◈</span> Laboratório <span
+            class="nav-mini">até 5 nós</span></button>
         <button class="nav-link" type="button" data-view="events"><span class="nav-ico">≡</span> Eventos</button>
       </nav>
       <div class="sidebar-bottom">
-        <div class="module-chip"><span class="pulse-dot"></span><div><b>Modo demonstração</b><small>Ambiente local · Docker</small></div></div>
-        <p>Projeto acadêmico<br/>Sistemas Distribuídos · 2026</p>
+        <div class="module-chip"><span class="pulse-dot"></span>
+          <div><b>Modo demonstração</b><small>Ambiente local · Docker</small></div>
+        </div>
+        <p>Projeto acadêmico<br />Sistemas Distribuídos · 2026</p>
         <span class="sidebar-version">v2.0.0</span>
       </div>
     </aside>
     <div class="main-shell">
-      <header class="topbar"><div class="breadcrumbs"><span class="breadcrumb-muted">Workspace</span><span class="crumb-arrow">/</span><b id="current-page-label">Visão geral</b></div><div class="topbar-right"><span id="sync-label" class="sync-label">Sincronizando...</span><span class="top-avatar">SD</span></div></header>
+      <header class="topbar">
+        <div class="breadcrumbs"><span class="breadcrumb-muted">Workspace</span><span class="crumb-arrow">/</span><b
+            id="current-page-label">Visão geral</b></div>
+        <div class="topbar-right"><span id="sync-label" class="sync-label">Sincronizando...</span><span
+            class="top-avatar">SD</span></div>
+      </header>
       <main class="content">
-        <div class="page-heading"><div><div class="eyebrow">SISTEMA DE LEILÃO DISTRIBUÍDO <span class="eyebrow-dash">—</span> PAINEL DE CONTROLE</div><h1 id="page-title">Visão geral <span class="heading-accent">↗</span></h1><p id="page-subtitle" class="subtitle">Acompanhe leilões, servidores e decisões do cluster em tempo real.</p></div><div class="heading-actions"><label class="demo-select-wrap"><span>SIMULAR NO LEILÃO</span><select id="demo-auction" aria-label="Escolher leilão para lances simulados"><option value="">Automático (primeiro aberto)</option></select></label><button id="btn-demo" class="btn btn-outline" type="button"><span>▶</span> Simular rodada</button><button id="btn-create" class="btn btn-dark" type="button"><span>＋</span> Novo leilão</button></div></div>
+        <div class="page-heading">
+          <div>
+            <div class="eyebrow">SISTEMA DE LEILÃO DISTRIBUÍDO <span class="eyebrow-dash">—</span> PAINEL DE CONTROLE
+            </div>
+            <h1 id="page-title">Visão geral <span class="heading-accent">↗</span></h1>
+            <p id="page-subtitle" class="subtitle">Acompanhe leilões, servidores e decisões do cluster em tempo real.
+            </p>
+          </div>
+          <div class="heading-actions"><label class="demo-select-wrap"><span>SIMULAR NO LEILÃO</span><select
+                id="demo-auction" aria-label="Escolher leilão para lances simulados">
+                <option value="">Automático (primeiro aberto)</option>
+              </select></label><button id="btn-demo" class="btn btn-outline" type="button"><span>▶</span> Simular
+              rodada</button><button id="btn-create" class="btn btn-dark" type="button"><span>＋</span> Novo
+              leilão</button></div>
+        </div>
         <div id="banner" class="notice hidden" role="status"></div>
         <section class="metrics" aria-label="Indicadores do cluster">
-          <article class="metric"><div class="metric-top"><span>LEILÕES ATIVOS</span><span class="metric-symbol">◈</span></div><div class="metric-value" id="metric-active">—</div><div class="metric-bottom">Itens recebendo lances</div></article>
-          <article class="metric"><div class="metric-top"><span>LANCES REGISTRADOS</span><span class="metric-symbol">↗</span></div><div class="metric-value" id="metric-bids">—</div><div class="metric-bottom">Eventos confirmados</div></article>
-          <article class="metric"><div class="metric-top"><span>NÓS OPERACIONAIS</span><span class="metric-symbol">⬡</span></div><div class="metric-value" id="metric-nodes">—<span class="metric-suffix">/ 3</span></div><div class="metric-bottom" id="metric-quorum">Quórum: 2 de 3</div></article>
-          <article class="metric metric-accent"><div class="metric-top"><span>LÍDER ATUAL</span><span class="metric-symbol">✳</span></div><div class="metric-value" id="metric-leader">—</div><div class="metric-bottom" id="metric-term">Eleição Bully</div></article>
+          <article class="metric">
+            <div class="metric-top"><span>LEILÕES ATIVOS</span><span class="metric-symbol">◈</span></div>
+            <div class="metric-value" id="metric-active">—</div>
+            <div class="metric-bottom">Itens recebendo lances</div>
+          </article>
+          <article class="metric">
+            <div class="metric-top"><span>LANCES REGISTRADOS</span><span class="metric-symbol">↗</span></div>
+            <div class="metric-value" id="metric-bids">—</div>
+            <div class="metric-bottom">Eventos confirmados</div>
+          </article>
+          <article class="metric">
+            <div class="metric-top"><span>NÓS OPERACIONAIS</span><span class="metric-symbol">⬡</span></div>
+            <div class="metric-value" id="metric-nodes">—<span class="metric-suffix">/ 3</span></div>
+            <div class="metric-bottom" id="metric-quorum">Quórum: 2 de 3</div>
+          </article>
+          <article class="metric metric-accent">
+            <div class="metric-top"><span>LÍDER ATUAL</span><span class="metric-symbol">✳</span></div>
+            <div class="metric-value" id="metric-leader">—</div>
+            <div class="metric-bottom" id="metric-term">Eleição Bully</div>
+          </article>
         </section>
         <section class="view" id="view-overview">
           <div class="dashboard-grid">
             <div class="stack">
-              <article class="panel"><div class="panel-head"><div><div class="panel-eyebrow">MARKETPLACE</div><h2>Leilões em andamento</h2></div><button class="ghost-link" data-view="auctions" type="button">Ver todos <span>↗</span></button></div><div id="overview-auctions" class="auction-list"></div></article>
-              <article class="panel"><div class="panel-head"><div><div class="panel-eyebrow">INFRAESTRUTURA</div><h2>Saúde do cluster</h2></div><span id="cluster-indicator" class="state-pill">Verificando</span></div><div id="overview-nodes" class="nodes-grid"></div><div class="panel-footnote">Simule falhas, restaure nós e acompanhe a eleição no <button class="inline-link" data-view="lab">laboratório ↗</button>.</div></article>
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <div class="panel-eyebrow">MARKETPLACE</div>
+                    <h2>Leilões em andamento</h2>
+                  </div><button class="ghost-link" data-view="auctions" type="button">Ver todos <span>↗</span></button>
+                </div>
+                <div id="overview-auctions" class="auction-list"></div>
+              </article>
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <div class="panel-eyebrow">INFRAESTRUTURA</div>
+                    <h2>Saúde do cluster</h2>
+                  </div><span id="cluster-indicator" class="state-pill">Verificando</span>
+                </div>
+                <div id="overview-nodes" class="nodes-grid"></div>
+                <div class="panel-footnote">Simule falhas, restaure nós e acompanhe a eleição no <button
+                    class="inline-link" data-view="lab">laboratório ↗</button>.</div>
+              </article>
             </div>
             <div class="stack">
-              <article class="panel highlight-panel"><div class="highlight-top"><span class="highlight-asterisk">✳</span><span class="highlight-tag">TESTE GUIADO</span></div><h2>Veja o distribuído<br/>em ação.</h2><p>Crie lances, interrompa o líder e observe o cluster se reorganizar, sem abrir o terminal.</p><button id="btn-open-lab" class="btn btn-light" type="button">Abrir laboratório <span>↗</span></button><div class="highlight-lines"><span></span><span></span><span></span></div></article>
-              <article class="panel"><div class="panel-head"><div><div class="panel-eyebrow">ATIVIDADE RECENTE</div><h2>Log de eventos</h2></div><button class="ghost-link" data-view="events" type="button">Ver histórico ↗</button></div><div id="overview-events" class="event-list compact"></div></article>
+              <article class="panel highlight-panel">
+                <div class="highlight-top"><span class="highlight-asterisk">✳</span><span class="highlight-tag">TESTE
+                    GUIADO</span></div>
+                <h2>Veja o distribuído<br />em ação.</h2>
+                <p>Crie lances, interrompa o líder e observe o cluster se reorganizar, sem abrir o terminal.</p><button
+                  id="btn-open-lab" class="btn btn-light" type="button">Abrir laboratório <span>↗</span></button>
+                <div class="highlight-lines"><span></span><span></span><span></span></div>
+              </article>
+              <article class="panel">
+                <div class="panel-head">
+                  <div>
+                    <div class="panel-eyebrow">ATIVIDADE RECENTE</div>
+                    <h2>Log de eventos</h2>
+                  </div><button class="ghost-link" data-view="events" type="button">Ver histórico ↗</button>
+                </div>
+                <div id="overview-events" class="event-list compact"></div>
+              </article>
             </div>
           </div>
         </section>
-        <section class="view hidden" id="view-auctions"><article class="panel"><div class="panel-head"><div><div class="panel-eyebrow">CATÁLOGO</div><h2>Todos os leilões</h2></div><span class="muted-mini">Ordenados por criação</span></div><div id="all-auctions" class="auction-list"></div></article></section>
+        <section class="view hidden" id="view-auctions">
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-eyebrow">CATÁLOGO</div>
+                <h2>Todos os leilões</h2>
+              </div><span class="muted-mini">Ordenados por criação</span>
+            </div>
+            <div id="all-auctions" class="auction-list"></div>
+          </article>
+        </section>
         <section class="view hidden" id="view-lab">
-          <div class="lab-intro"><div><div class="panel-eyebrow">SIMULADOR DE FALHAS</div><h2>Controle os servidores</h2><p>Coloque nós em falha simulada e restaure-os. O dashboard permanece disponível, pois roda separado do cluster.</p></div><span class="lab-label">AMBIENTE LOCAL</span></div>
+          <div class="lab-intro">
+            <div>
+              <div class="panel-eyebrow">SIMULADOR DE FALHAS</div>
+              <h2>Controle os servidores</h2>
+              <p>Coloque nós em falha simulada e restaure-os. O dashboard permanece disponível, pois roda separado do
+                cluster.</p>
+            </div><span class="lab-label">AMBIENTE LOCAL</span>
+          </div>
           <div class="lab-management">
             <article class="panel lab-manage-card">
               <div class="panel-eyebrow">MEMBROS DO CLUSTER</div>
               <h2>Criar e administrar nós</h2>
-              <p>Ative um novo contêiner do pool de 5, renomeie ou retire um membro da configuração ativa. A alteração de nome não muda o ID ou o endereço do servidor.</p>
-              <div class="lab-manage-footer"><span id="membership-label" class="muted-mini">3 de 5 membros habilitados</span><button id="btn-add-node" class="btn btn-dark" type="button">＋ Criar nó</button></div>
+              <p>Ative um novo contêiner do pool de 5, renomeie ou retire um membro da configuração ativa. A alteração
+                de nome não muda o ID ou o endereço do servidor.</p>
+              <div class="lab-manage-footer"><span id="membership-label" class="muted-mini">3 de 5 membros
+                  habilitados</span><button id="btn-add-node" class="btn btn-dark" type="button">＋ Criar nó</button>
+              </div>
             </article>
             <article class="panel lab-manage-card">
               <div class="panel-eyebrow">POLÍTICA DE CONFIRMAÇÃO</div>
               <h2>Quórum de escrita</h2>
-              <p>Defina quantos membros devem confirmar um lance. Por segurança, não é permitido definir menos que a maioria dos nós ativos.</p>
-              <div class="lab-manage-footer"><label class="quorum-control"><span>Mínimo de confirmações</span><select id="lab-quorum-select" aria-label="Quórum de escrita"><option value="2">2</option></select></label><button id="btn-quorum-save" class="btn btn-outline" type="button">Aplicar quórum</button></div>
+              <p>Defina quantos membros devem confirmar um lance. Por segurança, não é permitido definir menos que a
+                maioria dos nós ativos.</p>
+              <div class="lab-manage-footer"><label class="quorum-control"><span>Mínimo de confirmações</span><select
+                    id="lab-quorum-select" aria-label="Quórum de escrita">
+                    <option value="2">2</option>
+                  </select></label><button id="btn-quorum-save" class="btn btn-outline" type="button">Aplicar
+                  quórum</button></div>
               <p id="quorum-help" class="quorum-help">Mínimo seguro: 2 de 3.</p>
             </article>
           </div>
           <div id="lab-nodes" class="lab-grid"></div>
-          <div class="lab-grid lab-bottom"><article class="panel"><div class="panel-eyebrow">EXPERIMENTO A</div><h2>Troca de liderança</h2><p>Com 3 nós ativos, o Nó 3 normalmente lidera. Pause o Nó 3 e veja o Nó 2 assumir. Depois, restaure o Nó 3.</p><div class="steps"><div><b>01</b> Confirme três nós ativos</div><div><b>02</b> Pause o líder</div><div><b>03</b> Observe o novo líder</div><div><b>04</b> Restaure e confira os dados</div></div></article><article class="panel"><div class="panel-eyebrow">EXPERIMENTO B</div><h2>Quórum e consistência</h2><p>Pause nós suficientes para ficar abaixo do quórum configurado e tente enviar um lance. O sistema deve bloquear a operação.</p><div class="note-box"><b><span id="lab-quorum-note">Quórum necessário: 2 de 3.</span></b><span>Simulações de falha não param os contêineres reais; suspendem a participação dos nós no protocolo.</span></div></article></div>
+          <div class="lab-grid lab-bottom">
+            <article class="panel">
+              <div class="panel-eyebrow">EXPERIMENTO A</div>
+              <h2>Troca de liderança</h2>
+              <p>Com 3 nós ativos, o Nó 3 normalmente lidera. Pause o Nó 3 e veja o Nó 2 assumir. Depois, restaure o Nó
+                3.</p>
+              <div class="steps">
+                <div><b>01</b> Confirme três nós ativos</div>
+                <div><b>02</b> Pause o líder</div>
+                <div><b>03</b> Observe o novo líder</div>
+                <div><b>04</b> Restaure e confira os dados</div>
+              </div>
+            </article>
+            <article class="panel">
+              <div class="panel-eyebrow">EXPERIMENTO B</div>
+              <h2>Quórum e consistência</h2>
+              <p>Pause nós suficientes para ficar abaixo do quórum configurado e tente enviar um lance. O sistema deve
+                bloquear a operação.</p>
+              <div class="note-box"><b><span id="lab-quorum-note">Quórum necessário: 2 de 3.</span></b><span>Simulações
+                  de falha não param os contêineres reais; suspendem a participação dos nós no protocolo.</span></div>
+            </article>
+          </div>
         </section>
-        <section class="view hidden" id="view-events"><article class="panel"><div class="panel-head"><div><div class="panel-eyebrow">OBSERVABILIDADE</div><h2>Eventos do cluster</h2></div><span class="muted-mini">Últimos eventos por nó</span></div><div id="all-events" class="event-list"></div></article></section>
-        <footer class="footer"><span>ÁTRIO / LEILÃO DISTRIBUÍDO</span><span>Node.js · REST · Bully · Lamport · Replicação</span></footer>
+        <section class="view hidden" id="view-events">
+          <article class="panel">
+            <div class="panel-head">
+              <div>
+                <div class="panel-eyebrow">OBSERVABILIDADE</div>
+                <h2>Eventos do cluster</h2>
+              </div><span class="muted-mini">Últimos eventos por nó</span>
+            </div>
+            <div id="all-events" class="event-list"></div>
+          </article>
+        </section>
+        <footer class="footer"><span>ÁTRIO / LEILÃO DISTRIBUÍDO</span><span>Node.js · REST · Bully · Lamport ·
+            Replicação</span></footer>
       </main>
     </div>
   </div>
-  <div class="modal-backdrop hidden" id="modal-backdrop" role="presentation"><section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title"><div class="modal-head"><div><span class="panel-eyebrow" id="modal-eyebrow">NOVA OPERAÇÃO</span><h2 id="modal-title">Criar leilão</h2></div><button class="modal-close" type="button" id="modal-close" aria-label="Fechar">×</button></div><form id="modal-form"><div id="modal-fields"></div><div class="modal-actions"><button type="button" id="modal-cancel" class="btn btn-outline">Cancelar</button><button type="submit" id="modal-submit" class="btn btn-dark">Confirmar <span>↗</span></button></div></form></section></div>
+  <div class="modal-backdrop hidden" id="modal-backdrop" role="presentation">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <div class="modal-head">
+        <div><span class="panel-eyebrow" id="modal-eyebrow">NOVA OPERAÇÃO</span>
+          <h2 id="modal-title">Criar leilão</h2>
+        </div><button class="modal-close" type="button" id="modal-close" aria-label="Fechar">×</button>
+      </div>
+      <form id="modal-form">
+        <div id="modal-fields"></div>
+        <div class="modal-actions"><button type="button" id="modal-cancel"
+            class="btn btn-outline">Cancelar</button><button type="submit" id="modal-submit"
+            class="btn btn-dark">Confirmar <span>↗</span></button></div>
+      </form>
+    </section>
+  </div>
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
 </body>
+
 </html>
