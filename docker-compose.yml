@@ -8,7 +8,9 @@ x-node-env: &node-env
   CLUSTER_INITIAL_ACTIVE: "1,2,3"
 
 x-node: &node-base
-  build: .
+  build:
+    context: .
+    target: backend
   restart: unless-stopped
   networks: [leilao]
 
@@ -50,13 +52,13 @@ services:
     volumes: ["node5_data:/data"]
   dashboard:
     <<: *node-base
-    command: ["node", "dashboard/server.js"]
+    build:
+      context: .
+      target: dashboard
+    command: ["node", "backend/gateway/server.js"]
     environment:
+      <<: *node-env
       PORT: 8080
-      DATA_DIR: /data
-      CLUSTER_INITIAL_ACTIVE: "1,2,3"
-      CLUSTER_NODES: "1=http://node1:3000,2=http://node2:3000,3=http://node3:3000,4=http://node4:3000,5=http://node5:3000"
-      CONTROL_TOKEN: "lab-local-demo"
     ports: ["127.0.0.1:8080:8080"]
     volumes: ["dashboard_data:/data"]
     depends_on: [node1, node2, node3, node4, node5]

@@ -1,6 +1,7 @@
 .git
-.data
-node_modules
-coverage
+**/.data
+**/node_modules
+**/coverage
+**/dist
 *.zip
 *.log

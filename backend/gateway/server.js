@@ -13,7 +13,7 @@ const STORE = path.join(DATA_DIR, 'cluster-config.json');
 fs.mkdirSync(DATA_DIR, { recursive: true });
 const original = { epoch: 0, activeIds: defaultActive, writeQuorum: Math.floor(defaultActive.length / 2) + 1, names: Object.fromEntries([...NODES.keys()].map(id => [id, `Nó ${id}`])) };
 let config = fs.existsSync(STORE) ? JSON.parse(fs.readFileSync(STORE, 'utf8')) : original;
-const pub = path.join(__dirname, 'public');
+const pub = path.resolve(process.env.FRONTEND_DIST || path.join(__dirname, '../../frontend/dist'));
 let serial = Promise.resolve(), reconfiguring = false;
 const json = (res, status, data) => { res.writeHead(status, { 'content-type': 'application/json; charset=utf-8', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' }); res.end(JSON.stringify(data)); };
 const fail = (code, message) => Object.assign(new Error(message), { status: code });
@@ -66,6 +66,15 @@ async function handler(req, res) {
         }
         throw fail(404, 'API não encontrada');
     }
-    if (req.method !== 'GET') throw fail(405, 'Método não permitido'); const file = p === '/' ? 'index.html' : p.replace(/^\//, ''); if (!['index.html', 'app.js', 'style.css'].includes(file)) throw fail(404, 'Arquivo não encontrado'); const types = { 'index.html': 'text/html; charset=utf-8', 'app.js': 'application/javascript; charset=utf-8', 'style.css': 'text/css; charset=utf-8' }; res.writeHead(200, { 'content-type': types[file], 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' }); fs.createReadStream(path.join(pub, file)).pipe(res);
+    // O gateway serve o build estático do Vite e mantém a API na mesma origem.
+    if (req.method !== 'GET' && req.method !== 'HEAD') throw fail(405, 'Método não permitido');
+    const file = p === '/' || p === '/index.html' ? 'index.html' : /^\/assets\/[A-Za-z0-9_.-]+$/.test(p) ? p.slice(1) : null;
+    if (!file) throw fail(404, 'Arquivo não encontrado');
+    const types = { '.html': 'text/html; charset=utf-8', '.js': 'application/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.woff2': 'font/woff2' };
+    let contents;
+    try { contents = await fs.promises.readFile(path.join(pub, file)); }
+    catch (err) { if (err.code !== 'ENOENT') throw err; throw fail(file === 'index.html' ? 503 : 404, file === 'index.html' ? 'Frontend não compilado. Execute npm run frontend:build.' : 'Arquivo não encontrado'); }
+    res.writeHead(200, { 'content-type': types[path.extname(file)] || 'application/octet-stream', 'cache-control': 'no-store', 'x-content-type-options': 'nosniff' });
+    res.end(req.method === 'HEAD' ? undefined : contents);
 }
 http.createServer((req, res) => handler(req, res).catch(err => { console.error('[dashboard]', err.message); if (!res.writableEnded) json(res, err.status || 500, { ok: false, error: err.message }); })).listen(PORT, '0.0.0.0', () => console.log(`Dashboard na porta ${PORT} · membros ${config.activeIds.join(',')} · quorum ${config.writeQuorum}`));

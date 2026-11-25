@@ -1,0 +1,14 @@
+{
+  "name": "leilao-distribuido-backend",
+  "version": "2.0.0",
+  "private": true,
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start:node": "node src/server.js",
+    "start:dashboard": "node gateway/server.js",
+    "test": "node --test tests/cluster.test.js"
+  }
+}
